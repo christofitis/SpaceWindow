@@ -8,7 +8,7 @@ let maxNumAstroids = 5;
 let astroids = []
 let astroidSpawnRate = 1;
 
-let maxNumPlanets = 3;
+let maxNumPlanets = 5;
 let planets = [];
 let planetSpawnRate = .1;
 
@@ -39,7 +39,7 @@ function draw() {
     background(0);
    
     cameraLocation.add(cameraDirection);
-
+    
     //draw stars
     for (let star of stars) {
         star.show();
@@ -76,6 +76,8 @@ function draw() {
     if (random(100) < planetSpawnRate && planets.length < maxNumPlanets) {
         let planet = new Planet(getVectorOutsideWindow(random(spawnQuadrants), 300), 300);
         planets.push(planet);
+        planets.sort((a, b) => (a.z > b.z) ? 1 : -1);
+        console.log(planets);
     }
 
     //draw planet

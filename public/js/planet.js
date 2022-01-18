@@ -2,15 +2,16 @@ class Planet {
     constructor(location, radius) {
         this.location = createVector(location.x, location.y);
         this.isInWindow = "spawn";
-        this.z = random(.3, 1);
+        this.z = random(.3, .5);
         this.speed = createVector();
         this.speed.set(cameraDirection);
         this.r = radius*this.z*random();
+        this.color = map(this.z, .3, .5, 10, 255);
     }
 
     show() {
         noStroke();
-        fill(0, 0, 255*this.z);
+        fill(0, 0, this.color);
         ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
 
     }
