@@ -1,0 +1,14 @@
+{
+  "name": "spacewindow",
+  "version": "1.0.0",
+  "description": "random space emulator made with p5js javascript framework.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
