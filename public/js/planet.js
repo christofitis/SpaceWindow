@@ -6,12 +6,17 @@ class Planet {
         this.speed = createVector();
         this.speed.set(cameraDirection);
         this.r = radius*this.z*random();
-        this.color = map(this.z, .3, .5, 10, 255);
+
+        this.color = {
+            r: 255*random()*this.z,
+            g: 255*random()*this.z,
+            b: 255*random()*this.z,
+        };
     }
 
     show() {
         noStroke();
-        fill(0, 0, this.color);
+        fill(this.color.r, this.color.g, this.color.b);
         ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
 
     }

@@ -10,7 +10,7 @@ let astroidSpawnRate = 1;
 
 let maxNumPlanets = 5;
 let planets = [];
-let planetSpawnRate = .1;
+let planetSpawnRate = 90;
 
 let cameraLocation;
 let cameraDirection;
@@ -37,7 +37,7 @@ function setup() {
 
 function draw() {
     background(0);
-   
+
     cameraLocation.add(cameraDirection);
     
     //draw stars
@@ -45,13 +45,12 @@ function draw() {
         star.show();
         
         if (star.getIsInWindow() == "not visible"){
-            stars.splice(stars.indexOf(star), 1);
+            let loc = getVectorOutsideWindow(random(spawnQuadrants), 10);
+            let s = new Star(createVector(loc.x, loc.y));
+            stars.splice(stars.indexOf(star), 1, s);
             //choose which quadrant to add stars too 0 = top (up) 2 = left 
             
-            let loc = getVectorOutsideWindow(random(spawnQuadrants), 10);
-            
-            let s = new Star(createVector(loc.x, loc.y));
-            stars.push(s);
+            //stars.push(s);
         }
     }
 
@@ -77,13 +76,13 @@ function draw() {
         let planet = new Planet(getVectorOutsideWindow(random(spawnQuadrants), 300), 300);
         planets.push(planet);
         planets.sort((a, b) => (a.z > b.z) ? 1 : -1);
-        console.log(planets);
+        
     }
 
     //draw planet
     for (let p of planets) {
-        p.show();
         p.move();
+        p.show();
         //remove astroid if out of canvas
         if (p.getIsInWindow() === "not visible"){
             planets.splice(planets.indexOf(p), 1);
