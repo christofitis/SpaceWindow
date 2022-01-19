@@ -5,14 +5,28 @@ class Astroid {
         this.direction = createVector(random(canvasW), random(canvasH));
         this.isInWindow = "spawn";
         this.direction = p5.Vector.sub(this.direction, this.location);
-        this.speed = random(10);
-        this.r = random(10);
+        this.speed = 1;
+        this.r = random(1,10);
+        this.numBlobs = random(100);
+
+        this.body = createGraphics(this.r*2, this.r*2);
+        push();
+        this.body.noStroke();
+        this.body.fill(255*random());
+        //this.body.ellipse(this.r, this.r, this.r*2, this.r*2);
+        this.body.translate(this.r, this.r);
+        for (let i = 0; i < this.numBlobs; i++){
+            this.body.fill(255*random());
+            let tempr = random();
+            this.body.ellipse((this.r/2*random()*random([1, -1])), (this.r/2*random()*random([1, -1])), this.r*tempr/2, this.r*tempr/2);
+        }
+        pop();
     }
 
     show() {
-        noStroke();
-        fill(130);
-        ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
+
+        image(this.body, this.location.x, this.location.y, this.r*2, this.r*2);
+
     }
 
     move() {

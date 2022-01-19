@@ -8,11 +8,14 @@ class Star {
         this.speed.set(cameraDirection);
         this.twinkle = false;
         this.color = createVector(255, 255, 255);
-
+        this.fade = floor(random(100,256));
         
         if (random(100) < 1){
             this.color = createVector(random()*255, random()*255, random()*255);
             
+        }
+        else {
+            this.color.set(this.fade, this.fade, this.fade);
         }
         if (random(100) < .1){
             this.twinkle = true;

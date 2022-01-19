@@ -6,7 +6,7 @@ let stars = []
 
 let maxNumAstroids = 10;
 let astroids = []
-let astroidSpawnRate = 50;
+let astroidSpawnRate = .1;
 
 let maxNumPlanets = 7;
 let planets = [];
