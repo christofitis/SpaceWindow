@@ -4,17 +4,17 @@ let canvasH = 500;
 let numOfStars = 500;
 let stars = []
 
-let maxNumAstroids = 5;
+let maxNumAstroids = 10;
 let astroids = []
-let astroidSpawnRate = .1;
+let astroidSpawnRate = 50;
 
-let maxNumPlanets = 5;
+let maxNumPlanets = 7;
 let planets = [];
-let planetSpawnRate = 99;
+let planetSpawnRate = .02;
 
 let cameraLocation;
 let cameraDirection;
-let cameraSpeed = 10;
+let cameraSpeed = 2;
 
 let spawnQuadrants = []
 
@@ -60,12 +60,20 @@ function draw() {
     }
 
     //draw astroids
-    for (let a of astroids) {
-        a.show();
-        a.move();
+    // for (let a of astroids) {
+    //     a.show();
+    //     a.move();
+    //     //remove astroid if out of canvas
+    //     if (a.getIsInWindow() === "not visible"){
+    //         astroids.splice(astroids.indexOf(a), 1);
+    //     }
+    // }
+    for (let i = astroids.length-1; i >= 0; i--) {
+        astroids[i].show();
+        astroids[i].move();
         //remove astroid if out of canvas
-        if (a.getIsInWindow() === "not visible"){
-            astroids.splice(astroids.indexOf(a), 1);
+        if (astroids[i].getIsInWindow() === "not visible"){
+            astroids.splice(i, 1);
         }
     }
 
@@ -93,7 +101,6 @@ function draw() {
         //remove planet if out of canvas
         if (planets[i].getIsInWindow() === "not visible"){
             planets.splice(i, 1);
-            console.log("DEATH");
         }
     }
 
