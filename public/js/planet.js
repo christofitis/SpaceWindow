@@ -12,17 +12,42 @@ class Planet {
             g: 255*random()*this.z,
             b: 255*random()*this.z,
         };
+
+       this.rot = TWO_PI*random();
+        
+   
+        this.img = loadImage('images/planets/' + floor(random(1, 150)) + '.png');
+     
+        
     }
 
+    
+
     show() {
-        noStroke();
-        fill(this.color.r, this.color.g, this.color.b);
-        ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
+        //noStroke();
+        
+        
+        //fill(255);
+        //ellipse(this.location.x+this.r, this.location.y+this.r, this.r*2, this.r*2);
+     
+        //this.img.mask(this.circleMask);
+      push();
+        translate(this.location.x, this.location.y)
+        rotate(this.rot);
+        imageMode(CENTER);
+        image(this.img, 0, 0, this.r*2, this.r*2)
+       pop();
+       ellipseMode(CENTER);
+       fill(0,0,0,map(this.z, .3, .5, 255, 0));
+       ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
+        //this.rot += .01;
+        //fill(this.color.r, this.color.g, this.color.b, 99);
+        
+
 
     }
 
     move() {
-        
         this.speed.set(cameraDirection);
         let mag = this.speed.mag();
         this.speed.setMag(mag*this.z)
@@ -53,4 +78,6 @@ class Planet {
     getIsInWindow(){
         return this.isInWindow;
     }
+
+ 
 }

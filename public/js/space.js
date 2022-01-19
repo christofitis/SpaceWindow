@@ -6,17 +6,18 @@ let stars = []
 
 let maxNumAstroids = 5;
 let astroids = []
-let astroidSpawnRate = 1;
+let astroidSpawnRate = .1;
 
 let maxNumPlanets = 5;
 let planets = [];
-let planetSpawnRate = 90;
+let planetSpawnRate = 99;
 
 let cameraLocation;
 let cameraDirection;
-let cameraSpeed = 1;
+let cameraSpeed = 10;
 
 let spawnQuadrants = []
+
 
 
 function setup() {
@@ -27,7 +28,7 @@ function setup() {
     cameraLocation = createVector(0,0);
     cameraDirection = createVector(cameraSpeed, 0);
     //initialize stars
-    //randomSeed(1);
+    randomSeed(7);
     for (let i = 0; i < numOfStars; i++) {
         let s = new Star(createVector(random(canvasW), random(canvasH)));
         stars.push(s);
@@ -37,9 +38,9 @@ function setup() {
 
 function draw() {
     background(0);
-
+    //console.log(frameRate());
     cameraLocation.add(cameraDirection);
-    
+   
     //draw stars
     for (let star of stars) {
         star.show();
@@ -48,9 +49,6 @@ function draw() {
             let loc = getVectorOutsideWindow(random(spawnQuadrants), 10);
             let s = new Star(createVector(loc.x, loc.y));
             stars.splice(stars.indexOf(star), 1, s);
-            //choose which quadrant to add stars too 0 = top (up) 2 = left 
-            
-            //stars.push(s);
         }
     }
 
@@ -80,14 +78,27 @@ function draw() {
     }
 
     //draw planet
-    for (let p of planets) {
-        p.move();
-        p.show();
-        //remove astroid if out of canvas
-        if (p.getIsInWindow() === "not visible"){
-            planets.splice(planets.indexOf(p), 1);
+    // for (let p of planets) {
+    //     p.move();
+    //     p.show();
+    //     //remove astroid if out of canvas
+    //     if (p.getIsInWindow() === "not visible"){
+    //         planets.splice(planets.indexOf(p), 1, []);
+    //         console.log("DEATH");
+    //     }
+    // }
+    for (let i = planets.length-1; i >= 0; i--) {
+        planets[i].move();
+        planets[i].show();
+        //remove planet if out of canvas
+        if (planets[i].getIsInWindow() === "not visible"){
+            planets.splice(i, 1);
+            console.log("DEATH");
         }
     }
+
+
+    
 
 
     
@@ -146,8 +157,8 @@ function setSpawnQuadrants() {
 
 
 function mousePressed() {
-    cameraSpeed += .5;
-    cameraDirection.set(cameraSpeed, -1);
+    cameraSpeed *= -1;
+    cameraDirection.set(cameraSpeed, 0);
     console.log(`Current speed: ${cameraSpeed}`);
     setSpawnQuadrants();
 }
