@@ -7,16 +7,18 @@ class Planet {
         this.speed.set(cameraDirection);
         this.r = radius*this.z*random();
 
+       
+
         this.color = {
             r: 255*random()*this.z,
             g: 255*random()*this.z,
             b: 255*random()*this.z,
         };
 
-       this.rot = TWO_PI*random();
+        this.rot = TWO_PI*random();
         
    
-        this.img = loadImage('images/planets/' + floor(random(1, 150)) + '.png');
+        this.img = loadImage('images/planets/' + floor(random(1, 501)) + '.png');
      
         
     }
@@ -65,7 +67,7 @@ class Planet {
         }
 
         //if astroid got too far from screen due to camera movement, set it to not visible
-        if (this.location.x > canvasW*2 || this.location.x < -canvasW*2 || this.location.y > canvasH*2 || this.location.y < -canvasH*2){
+        if (this.location.x > canvasW*2*this.r || this.location.x < -canvasW*2*this.r || this.location.y > canvasH*2*this.r || this.location.y < -canvasH*2*this.r){
             console.log("KILLED A STRAY PLANET");
             this.isInWindow = "not visible";
         }

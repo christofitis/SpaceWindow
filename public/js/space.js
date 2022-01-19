@@ -4,13 +4,13 @@ let canvasH = 500;
 let numOfStars = 500;
 let stars = []
 
-let maxNumAstroids = 10;
+let maxNumAstroids = 20;
 let astroids = []
-let astroidSpawnRate = .1;
+let astroidSpawnRate = .15;
 
 let maxNumPlanets = 7;
 let planets = [];
-let planetSpawnRate = .02;
+let planetSpawnRate = .05;
 
 let cameraLocation;
 let cameraDirection;
@@ -28,7 +28,7 @@ function setup() {
     cameraLocation = createVector(0,0);
     cameraDirection = createVector(cameraSpeed, 0);
     //initialize stars
-    randomSeed(7);
+    //randomSeed(7);
     for (let i = 0; i < numOfStars; i++) {
         let s = new Star(createVector(random(canvasW), random(canvasH)));
         stars.push(s);
@@ -40,7 +40,7 @@ function draw() {
     background(0);
     //console.log(frameRate());
     cameraLocation.add(cameraDirection);
-   
+    
     //draw stars
     for (let star of stars) {
         star.show();
@@ -69,8 +69,8 @@ function draw() {
     //     }
     // }
     for (let i = astroids.length-1; i >= 0; i--) {
-        astroids[i].show();
         astroids[i].move();
+        astroids[i].show();
         //remove astroid if out of canvas
         if (astroids[i].getIsInWindow() === "not visible"){
             astroids.splice(i, 1);
@@ -79,9 +79,14 @@ function draw() {
 
     //create planet
     if (random(100) < planetSpawnRate && planets.length < maxNumPlanets) {
-        let planet = new Planet(getVectorOutsideWindow(random(spawnQuadrants), 300), 300);
+        let radius = 300;
+        //create super close planet
+        if (random(100) < .01){
+            radius = 1000;
+        }
+        let planet = new Planet(getVectorOutsideWindow(random(spawnQuadrants), radius), radius);
         planets.push(planet);
-        planets.sort((a, b) => (a.z > b.z) ? 1 : -1);
+        planets.sort((a, b) => (a.z > b.z) ? -1 : 1);
         
     }
 

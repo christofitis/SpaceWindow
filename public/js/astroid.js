@@ -5,9 +5,10 @@ class Astroid {
         this.direction = createVector(random(canvasW), random(canvasH));
         this.isInWindow = "spawn";
         this.direction = p5.Vector.sub(this.direction, this.location);
-        this.speed = 1;
+        this.speed = random(.01,10);
         this.r = random(1,10);
         this.numBlobs = random(100);
+        
 
         this.body = createGraphics(this.r*2, this.r*2);
         push();
@@ -20,13 +21,16 @@ class Astroid {
             let tempr = random();
             this.body.ellipse((this.r/2*random()*random([1, -1])), (this.r/2*random()*random([1, -1])), this.r*tempr/2, this.r*tempr/2);
         }
+        
         pop();
     }
 
     show() {
-
+        
         image(this.body, this.location.x, this.location.y, this.r*2, this.r*2);
-
+        
+        
+        //ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
     }
 
     move() {
