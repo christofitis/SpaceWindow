@@ -8,7 +8,7 @@ class Astroid {
         this.speed = random(.01,10);
         this.r = random(1,10);
         this.numBlobs = random(100);
-        
+        this.atCamera = random([-1, 0]);
 
         this.body = createGraphics(this.r*2, this.r*2);
         push();
@@ -28,7 +28,7 @@ class Astroid {
     show() {
         
         image(this.body, this.location.x, this.location.y, this.r*2, this.r*2);
-        
+        this.r = Math.max(.01, this.r + (.1*random())*this.atCamera);
         
         //ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
     }

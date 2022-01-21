@@ -42,6 +42,7 @@ class Planet {
        ellipseMode(CENTER);
        fill(0,0,0,map(this.z, .3, .5, 255, 0));
        ellipse(this.location.x, this.location.y, this.r*2, this.r*2);
+       
         //this.rot += .01;
         //fill(this.color.r, this.color.g, this.color.b, 99);
         

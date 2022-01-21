@@ -6,11 +6,11 @@ let stars = []
 
 let maxNumAstroids = 20;
 let astroids = []
-let astroidSpawnRate = .15;
+let astroidSpawnRate = .2;
 
 let maxNumPlanets = 7;
 let planets = [];
-let planetSpawnRate = .05;
+let planetSpawnRate = .09;
 
 let cameraLocation;
 let cameraDirection;
@@ -55,8 +55,7 @@ function draw() {
     //console.log(astroids);
     //create astroid
     if (random(100) < astroidSpawnRate && astroids.length < maxNumAstroids) {
-        let astroid = new Astroid(getVectorOutsideWindow(floor(random(4)), 20));
-        astroids.push(astroid);
+        spawnAstroid();
     }
 
     //draw astroids
@@ -79,14 +78,7 @@ function draw() {
 
     //create planet
     if (random(100) < planetSpawnRate && planets.length < maxNumPlanets) {
-        let radius = 300;
-        //create super close planet
-        if (random(100) < .01){
-            radius = 1000;
-        }
-        let planet = new Planet(getVectorOutsideWindow(random(spawnQuadrants), radius), radius);
-        planets.push(planet);
-        planets.sort((a, b) => (a.z > b.z) ? -1 : 1);
+        spawnPlanet();
         
     }
 
@@ -167,10 +159,46 @@ function setSpawnQuadrants() {
 
 }
 
-
-function mousePressed() {
-    cameraSpeed *= -1;
-    cameraDirection.set(cameraSpeed, 0);
-    console.log(`Current speed: ${cameraSpeed}`);
-    setSpawnQuadrants();
+function spawnPlanet() {
+    let radius = 300;
+    //create super close planet
+    if (random(100) < .01){
+        radius = 1000;
+    }
+    let planet = new Planet(getVectorOutsideWindow(random(spawnQuadrants), radius), radius);
+    planets.push(planet);
+    planets.sort((a, b) => (a.z > b.z) ? -1 : 1);
 }
+
+function spawnAstroid() {
+    let astroid = new Astroid(getVectorOutsideWindow(floor(random(4)), 20));
+    astroids.push(astroid);
+}
+
+function keyPressed() {
+
+    if (keyCode === UP_ARROW) {
+        cameraDirection.set(0, -cameraSpeed);
+    } 
+    else if (keyCode === DOWN_ARROW) {
+        cameraDirection.set(0, cameraSpeed);
+    }
+    else if (keyCode === RIGHT_ARROW){
+        cameraDirection.set(cameraSpeed, 0);
+    }
+    else if (keyCode === LEFT_ARROW){
+        cameraDirection.set(-cameraSpeed, 0);
+    }
+    else if (keyCode === 80){
+        console.log("Spawning new planet.")
+        spawnPlanet();
+        
+    }
+    else if (keyCode === 65){
+        console.log("Spawning new astroid.");
+        spawnAstroid();
+    }
+
+    setSpawnQuadrants();
+   
+  }
