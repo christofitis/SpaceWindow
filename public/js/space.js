@@ -44,7 +44,6 @@ function draw() {
     //draw stars
     for (let star of stars) {
         star.show();
-        
         if (star.getIsInWindow() == "not visible"){
             let loc = getVectorOutsideWindow(random(spawnQuadrants), 10);
             let s = new Star(createVector(loc.x, loc.y));
@@ -52,21 +51,12 @@ function draw() {
         }
     }
 
-    //console.log(astroids);
     //create astroid
     if (random(100) < astroidSpawnRate && astroids.length < maxNumAstroids) {
         spawnAstroid();
     }
 
-    //draw astroids
-    // for (let a of astroids) {
-    //     a.show();
-    //     a.move();
-    //     //remove astroid if out of canvas
-    //     if (a.getIsInWindow() === "not visible"){
-    //         astroids.splice(astroids.indexOf(a), 1);
-    //     }
-    // }
+    
     for (let i = astroids.length-1; i >= 0; i--) {
         astroids[i].move();
         astroids[i].show();
@@ -82,16 +72,6 @@ function draw() {
         
     }
 
-    //draw planet
-    // for (let p of planets) {
-    //     p.move();
-    //     p.show();
-    //     //remove astroid if out of canvas
-    //     if (p.getIsInWindow() === "not visible"){
-    //         planets.splice(planets.indexOf(p), 1, []);
-    //         console.log("DEATH");
-    //     }
-    // }
     for (let i = planets.length-1; i >= 0; i--) {
         planets[i].move();
         planets[i].show();
@@ -100,11 +80,6 @@ function draw() {
             planets.splice(i, 1);
         }
     }
-
-
-    
-
-
     
 }
 
@@ -143,20 +118,37 @@ function getVectorOutsideWindow(quadrant, offset){
 }
 
 function setSpawnQuadrants() {
+    console.log(cameraDirection);
+    let speedRatioX = 1;
+    let speedRatioY = 1;
+    if (cameraDirection.x !== 0 && cameraDirection.y !== 0){
+
+        
+        speedRatioX = Math.ceil(abs(cameraDirection.x)/abs(cameraDirection.y));
+        speedRatioY = Math.ceil(abs(cameraDirection.y)/abs(cameraDirection.x));
+        
+    }
+    
     spawnQuadrants = [];
-    if (cameraDirection.x > 0) {
-        spawnQuadrants.push(2);
-    }
-    if (cameraDirection.x < 0) {
-        spawnQuadrants.push(3);
-    }
-    if (cameraDirection.y > 0) {
-        spawnQuadrants.push(0);
-    }
-    if (cameraDirection.y < 0) {
-        spawnQuadrants.push(1);
+    for (let i = 0; i < speedRatioX; i++){
+        if (cameraDirection.x > 0) {
+            spawnQuadrants.push(2);
+        }
+        if (cameraDirection.x < 0) {
+            spawnQuadrants.push(3);
+        }
     }
 
+    for (let j = 0;j < speedRatioY; j++){
+            if (cameraDirection.y > 0) {
+                spawnQuadrants.push(0);
+            }
+            if (cameraDirection.y < 0) {
+                spawnQuadrants.push(1);
+            }
+    }
+    
+    console.log(spawnQuadrants);
 }
 
 function spawnPlanet() {
@@ -178,16 +170,16 @@ function spawnAstroid() {
 function keyPressed() {
     let speedAdjustment = .5;
     if (keyCode === UP_ARROW) {
-        cameraDirection.add(0, -speedAdjustment);
+        cameraDirection.add(0, speedAdjustment);
     } 
     else if (keyCode === DOWN_ARROW) {
-        cameraDirection.add(0, speedAdjustment);
+        cameraDirection.add(0, -speedAdjustment);
     }
     else if (keyCode === RIGHT_ARROW){
-        cameraDirection.add(speedAdjustment, 0);
+        cameraDirection.add(-speedAdjustment, 0);
     }
     else if (keyCode === LEFT_ARROW){
-        cameraDirection.add(-speedAdjustment, 0);
+        cameraDirection.add(speedAdjustment, 0);
     }
     else if (keyCode === 80){
         console.log("Spawning new planet.")
