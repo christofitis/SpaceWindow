@@ -14,7 +14,7 @@ let planetSpawnRate = .09;
 
 let cameraLocation;
 let cameraDirection;
-let cameraSpeed = 2;
+let initialCameraSpeed = 2;
 
 let spawnQuadrants = []
 
@@ -26,7 +26,7 @@ function setup() {
     canvasH = windowHeight;
     createCanvas(canvasW, canvasH);
     cameraLocation = createVector(0,0);
-    cameraDirection = createVector(cameraSpeed, 0);
+    cameraDirection = createVector(initialCameraSpeed, 0);
     //initialize stars
     //randomSeed(7);
     for (let i = 0; i < numOfStars; i++) {
@@ -176,18 +176,18 @@ function spawnAstroid() {
 }
 
 function keyPressed() {
-
+    let speedAdjustment = .5;
     if (keyCode === UP_ARROW) {
-        cameraDirection.set(0, -cameraSpeed);
+        cameraDirection.add(0, -speedAdjustment);
     } 
     else if (keyCode === DOWN_ARROW) {
-        cameraDirection.set(0, cameraSpeed);
+        cameraDirection.add(0, speedAdjustment);
     }
     else if (keyCode === RIGHT_ARROW){
-        cameraDirection.set(cameraSpeed, 0);
+        cameraDirection.add(speedAdjustment, 0);
     }
     else if (keyCode === LEFT_ARROW){
-        cameraDirection.set(-cameraSpeed, 0);
+        cameraDirection.add(-speedAdjustment, 0);
     }
     else if (keyCode === 80){
         console.log("Spawning new planet.")
@@ -198,6 +198,7 @@ function keyPressed() {
         console.log("Spawning new astroid.");
         spawnAstroid();
     }
+    cameraDirection.limit(5.0);
 
     setSpawnQuadrants();
    
