@@ -18,7 +18,7 @@ class Planet {
         this.rot = TWO_PI*random();
         
    
-        this.img = loadImage('images/planets/' + floor(random(1, 501)) + '.png');
+        this.img = loadImage('images/planets/' + floor(random(1, 151)) + '.png');
      
         
     }
